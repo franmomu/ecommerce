@@ -73,9 +73,13 @@ class MysqlReferenceTest extends TestCase
             ->method('getClassMetadata')
             ->willReturn($metadata);
 
+        $pdoStatement = $this->getMockBuilder(\PDOStatement::class)
+            ->onlyMethods(['execute'])
+            ->getMock();
+
         $connection->expects($this->any())
             ->method('query')
-            ->willReturn(new \PDOStatement());
+            ->willReturn($pdoStatement);
 
         $registry = $this->createMock(RegistryInterface::class);
         $registry->expects($this->any())->method('getManager')->willReturn($em);
